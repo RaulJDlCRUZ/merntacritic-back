@@ -1,40 +1,21 @@
-import fs from "fs";
-import csv from "fast-csv";
-import { createObjectCsvWriter } from "csv-writer";
+import {
+  readCSVFile,
+  createCSVWriter,
+  filterValues,
+  getFilteredHeaders,
+  createRecordObject,
+} from "./utils.js";
 import { austinCorgisRemoval } from "./columnas-eliminadas.js";
 
 const austin_corgis_video_games = new austinCorgisRemoval().filterlist;
 
 const csvFilePath = "origin_csv/austin-corgis-video_games.csv";
-const outFilePath = "origin_csv/filtered_austin_corgis_video_games.csv";
-const jsonArray = [];
+const outFilePath = "filtered_csv/filtered_austin_corgis_video_games.csv";
 const uniqueList = [];
 
 let uniquekey = "";
 
-function readCSVFile(filePath) {
-  return new Promise((resolve, reject) => {
-    const data = [];
-    fs.createReadStream(filePath)
-      .pipe(csv.parse({ headers: true }))
-      .on("data", (row) => {
-        data.push(row);
-      })
-      .on("end", () => {
-        resolve(data);
-      })
-      .on("error", (error) => {
-        reject(error);
-      });
-  });
-}
-
-function getFilteredHeaders(jsonArray, filterList) {
-  return Object.keys(jsonArray[0]).filter(
-    (value, index) => !filterList.includes(index)
-  );
-}
-
+/* Limpia los headers de caracteres especiales */
 function sanitizeHeaders(headers) {
   return headers.map((element) =>
     element
@@ -45,15 +26,7 @@ function sanitizeHeaders(headers) {
   );
 }
 
-function createCSVWriter(filePath, headers) {
-  return createObjectCsvWriter({
-    path: filePath,
-    header: headers.map((element) => {
-      return { id: element, title: element };
-    }),
-  });
-}
-
+/* Genera una clave única (tipo slug) para cada elemento */
 function generateUniqueKey(element) {
   return (
     element["Title"] +
@@ -64,46 +37,61 @@ function generateUniqueKey(element) {
   );
 }
 
-function filterValues(element, filterList) {
-  return Object.values(element).filter(
-    (value, index) => !filterList.includes(index)
-  );
-}
-
-function createRecordObject(headers, values) {
-  let newObject = {};
-  for (let i = 0; i < headers.length; i++) {
-    newObject[headers[i]] = values[i];
+function processMetadataGenres(genre) {
+  // Eliminar comillas dobles al principio y al final
+  if (genre.startsWith('"') && genre.endsWith('"')) {
+    genre = genre.slice(1, -1);
   }
-  return newObject;
+
+  // Reemplazar valores separados por comas y generar lista JSON
+  if (genre.includes(",")) {
+    genre = JSON.stringify(genre.split(",").map((item) => item.trim()));
+  }
+
+  return genre;
 }
 
+/* Procesa el archivo CSV */
 async function processCSV() {
   try {
     const jsonArray = await readCSVFile(csvFilePath);
+    console.log("[i] Archivo CSV leido");
     const headers = getFilteredHeaders(jsonArray, austin_corgis_video_games);
     const newHeaders = sanitizeHeaders(headers);
     const csvWriter = createCSVWriter(outFilePath, newHeaders);
     const recordsToWrite = [];
 
     jsonArray.forEach((element) => {
-      uniquekey = generateUniqueKey(element);
-
-      if (uniqueList.includes(uniquekey)) {
-        console.log("[!] " + uniquekey);
+      if (!element["Title"]) {
+        console.log(`[!] Sin nombre L${index + 2}\n`);
+        console.log(element);
       } else {
-        uniqueList.push(uniquekey);
-        const filteredValues = filterValues(element, austin_corgis_video_games);
-        const newObject = createRecordObject(newHeaders, filteredValues);
-        recordsToWrite.push(newObject);
+        uniquekey = generateUniqueKey(element);
+
+        if (uniqueList.includes(uniquekey)) {
+          console.log("[!] " + uniquekey);
+        } else {
+          uniqueList.push(uniquekey);
+          let filteredValues = filterValues(element, austin_corgis_video_games);
+
+          // Comprobar si existe el campo "Genres" y procesarlo
+          if (filteredValues[3]) {
+            filteredValues[3] = processMetadataGenres(filteredValues[3]);
+          }
+          const newObject = createRecordObject(newHeaders, filteredValues);
+          recordsToWrite.push(newObject);
+        }
       }
     });
 
     await csvWriter.writeRecords(recordsToWrite);
-    console.log("[W] All records written successfully");
+    console.log(
+      `[W] ${recordsToWrite.length} récords escritos correctamente en ${outFilePath}`
+    );
   } catch (error) {
-    console.error("Error processing CSV file:", error);
+    console.error("Error en el procesado CSV:", error);
   }
 }
 
+// Llamada a la función principal
 processCSV();
