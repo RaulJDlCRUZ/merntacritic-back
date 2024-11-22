@@ -9,7 +9,6 @@ Proyecto Práctico Sistemas de Información Ubicuos 2024-25
 - https://www.kaggle.com/datasets/jummyegg/rawg-game-dataset/data
 - https://www.kaggle.com/datasets/mohamedtarek01234/steam-games-reviews-and-rankings
 - https://www.kaggle.com/datasets/dahlia25/metacritic-video-game-comments
-- https://www.kaggle.com/datasets/andrewmvd/steam-reviews
 - https://www.kaggle.com/datasets/germanbotello/video-game-awards-20-23
 - https://www.kaggle.com/datasets/unanimad/the-game-awards
 - https://www.kaggle.com/datasets/floval/12-000-video-game-reviews-from-vandal

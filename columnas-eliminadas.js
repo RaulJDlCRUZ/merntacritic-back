@@ -25,3 +25,11 @@ export class mohamedTarekRemoval {
     this.filterlist = [10, 11];
   }
 }
+
+/* dahlia25 info solo se elimina la primera, y se debe proceder de otra forma, como vandal */
+
+export class jvcRemoval {
+  constructor() {
+    this.filterlist = [0, 1, 8];
+  }
+}

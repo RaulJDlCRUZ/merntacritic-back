@@ -4,8 +4,8 @@ import {
   filterValues,
   getFilteredHeaders,
   createRecordObject,
-} from "./utils.js";
-import { mohamedTarekRemoval } from "./columnas-eliminadas.js";
+} from "../utils.js";
+import { mohamedTarekRemoval } from "../columnas-eliminadas.js";
 import { DateTime } from "luxon";
 
 const mohamed_tarek_video_games = new mohamedTarekRemoval().filterlist;

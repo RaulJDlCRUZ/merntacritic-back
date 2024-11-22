@@ -2,6 +2,10 @@
 import fs from "fs";
 import csv from "fast-csv";
 import { createObjectCsvWriter } from "csv-writer";
+import { ESRBRating, PEGIRating } from "./gameRating.js";
+
+const ESRB = new ESRBRating();
+const PEGI = new PEGIRating();
 
 /* Objeto fs lee el archivo csv y lo convierte en un array de objetos */
 export function readCSVFile(filePath) {
@@ -47,9 +51,19 @@ export function getFilteredHeaders(jsonArray, filterList) {
 
 /* Crea un objeto a partir de los headers y los valores de un elemento */
 export function createRecordObject(headers, values) {
-    let newObject = {};
-    for (let i = 0; i < headers.length; i++) {
-      newObject[headers[i]] = values[i];
-    }
-    return newObject;
+  let newObject = {};
+  for (let i = 0; i < headers.length; i++) {
+    newObject[headers[i]] = values[i];
   }
+  return newObject;
+}
+
+/* Obtengo un valor por el estándar de clasificación */
+export function createRatingObject(standard, value) {
+  if (standard === "PEGI") {
+    // console.log({ [standard]: PEGI.getRating(value) });
+    return { [standard]: PEGI.getRating(value) };
+  } else if (standard === "ESRB") {
+    return { [standard]: ESRB.getRating(value) };
+  }
+}

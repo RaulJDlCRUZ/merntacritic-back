@@ -4,8 +4,8 @@ import {
   filterValues,
   getFilteredHeaders,
   createRecordObject,
-} from "./utils.js";
-import { trungHoangRemoval } from "./columnas-eliminadas.js";
+} from "../utils.js";
+import { trungHoangRemoval } from "../columnas-eliminadas.js";
 
 const trung_hoang_video_games = new trungHoangRemoval().filterlist;
 

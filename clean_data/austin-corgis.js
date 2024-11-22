@@ -4,8 +4,9 @@ import {
   filterValues,
   getFilteredHeaders,
   createRecordObject,
-} from "./utils.js";
-import { austinCorgisRemoval } from "./columnas-eliminadas.js";
+  createRatingObject,
+} from "../utils.js";
+import { austinCorgisRemoval } from "../columnas-eliminadas.js";
 
 const austin_corgis_video_games = new austinCorgisRemoval().filterlist;
 
@@ -15,17 +16,6 @@ const uniqueList = [];
 
 let uniquekey = "";
 
-/* Limpia los headers de caracteres especiales */
-function sanitizeHeaders(headers) {
-  return headers.map((element) =>
-    element
-      .replace(/\./g, "-")
-      .replace(/\s+/g, "")
-      .replace(/\+/g, "")
-      .replace(/\?/g, "")
-  );
-}
-
 /* Genera una clave única (tipo slug) para cada elemento */
 function generateUniqueKey(element) {
   return (
@@ -34,6 +24,30 @@ function generateUniqueKey(element) {
     element["Release.Console"] +
     "-" +
     element["Release.Year"]
+  );
+}
+
+/* Función que obtiene el tipo de rating del juego */
+function getRating(rating) {
+  if (!rating) {
+    return { ESRB: "Pending" };
+  }
+  let attributes = rating.split(" ");
+  // Trabajamos con ESRB
+  if (attributes.length === 1) {
+    return createRatingObject("ESRB", attributes[0]);
+  }
+  return createRatingObject("ESRB", attributes[1]);
+}
+
+/* Limpia los headers de caracteres especiales */
+function sanitizeHeaders(headers) {
+  return headers.map((element) =>
+    element
+      .replace(/\./g, "-")
+      .replace(/\s+/g, "")
+      .replace(/\+/g, "")
+      .replace(/\?/g, "")
   );
 }
 
@@ -73,12 +87,21 @@ async function processCSV() {
         } else {
           uniqueList.push(uniquekey);
           let filteredValues = filterValues(element, austin_corgis_video_games);
-
-          // Comprobar si existe el campo "Genres" y procesarlo
-          if (filteredValues[3]) {
-            filteredValues[3] = processMetadataGenres(filteredValues[3]);
-          }
           const newObject = createRecordObject(newHeaders, filteredValues);
+          // Comprobar si existe el campo "Genres" y procesarlo
+          if (newObject["Metadata-Genres"]) {
+            newObject["Metadata-Genres"] = processMetadataGenres(
+              newObject["Metadata-Genres"]
+            );
+          }
+          newObject["Features-Multiplatform"] =
+            newObject["Features-Multiplatform"] === "True" ? true : false;
+          // Arreglar el campo Release.Rating
+          if (newObject["Release-Rating"]) {
+            newObject["Release-Rating"] = JSON.stringify(
+              getRating(newObject["Release-Rating"])
+            ).replace(/"/g, ""); // Elimina comillas dobles
+          }
           recordsToWrite.push(newObject);
         }
       }

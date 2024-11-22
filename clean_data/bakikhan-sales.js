@@ -1,7 +1,7 @@
-import { readCSVFile, createCSVWriter } from "./utils.js";
+import { readCSVFile, createCSVWriter, createRatingObject } from "../utils.js";
 
 const csvFilePath = "origin_csv/bakikhan-video-game-sales.csv";
-const outFilePath = "filtered_csv/1_filtered_bakikhan-video-game-sales.csv";
+const outFilePath = "filtered_csv/filtered_bakikhan-video-game-sales.csv";
 
 let uniquekey = "";
 
@@ -14,6 +14,19 @@ function generateUniqueKey(element) {
     "-" +
     element["Year_of_Release"]
   );
+}
+
+/* Función que obtiene el tipo de rating del juego */
+function getRating(rating) {
+  if (!rating) {
+    return { ESRB: "Pending" };
+  }
+  let attributes = rating.split(" ");
+  // Trabajamos con ESRB
+  if (attributes.length === 1) {
+    return createRatingObject("ESRB", attributes[0]);
+  }
+  return createRatingObject("ESRB", attributes[1]);
 }
 
 /* Obtiene los headers del archivo csv (filtrado no requerido) */
@@ -44,11 +57,24 @@ async function processCSV() {
 
     jsonArray.forEach((element, index) => {
       if (!element["Name"]) {
-        console.log(`[!] Sin nombre L${index + 2}, omitido`);
+        console.log(`[!] L${index + 2} Juego sin nombre omitido`);
+      } else if (/\(.*sales.*\)/i.test(element["Name"])) {
+        // A veces se ponen a parte las ventas junto al juego (posibles duplicados!)
+        console.log(
+          `[!] L${index + 2} ${
+            element["Name"]
+          } contiene palabra "ventas", omitido`
+        );
       } else {
         uniquekey = generateUniqueKey(element);
+        // Arreglar Rating
+
+        element["Rating"] = JSON.stringify(
+          getRating(element["Rating"])
+        ).replace(/"/g, ""); // Elimina comillas dobles
+
         if (recordsMap.has(uniquekey)) {
-          console.log(`[!] Duplicado L${index + 2}: ${uniquekey}`);
+          console.log(`[!] L${index + 2} Duplicado: ${uniquekey}`);
 
           const originalRow = recordsMap.get(uniquekey);
 
@@ -77,8 +103,8 @@ async function processCSV() {
     // Escribir todos los registros únicos en el archivo CSV
     await csvWriter.writeRecords(Array.from(recordsMap.values()));
     console.log(
-        `[W] ${recordsMap.size} récords escritos correctamente en ${outFilePath}`
-      );
+      `[W] ${recordsMap.size} récords escritos correctamente en ${outFilePath}`
+    );
   } catch (error) {
     console.error("Error en el procesado CSV:", error);
   }
