@@ -1,4 +1,3 @@
-/* Date de sortie inconnue */
 import {
   readCSVFile,
   createCSVWriter,

@@ -68,7 +68,6 @@ async function processCSV() {
       } else {
         uniquekey = generateUniqueKey(element);
         // Arreglar Rating
-
         element["Rating"] = JSON.stringify(
           getRating(element["Rating"])
         ).replace(/"/g, ""); // Elimina comillas dobles
