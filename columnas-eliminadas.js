@@ -33,3 +33,10 @@ export class jvcRemoval {
     this.filterlist = [0, 1, 8];
   }
 }
+
+export class nikdavisRemoval {
+  constructor() {
+    // en nikdavis se parte de haber unido todos los ficheros en uno
+    this.filterlist = [0, 3, 6, 15, 16, 25, 26, 27];
+  }
+}
