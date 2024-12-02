@@ -47,7 +47,7 @@ export class GameHeaders {
       ],
       price: ["Original Price", "price"],
       discounted_price: ["Discounted Price"],
-      metascore: ["Metrics.Review Score", "metacritic", "Metascore"],
+      metascore: ["Metrics.Review Score", "metacritic", "Metascore", "Critic_Score"],
       user_score: ["User_Score", "website_rating", "Avg_Userscore"],
       website: ["website", "url"],
       description: [

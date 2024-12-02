@@ -2,3 +2,4 @@ node_modules/
 package-lock.json
 origin_csv/
 filtered_csv/
+merge_data/*.csv
