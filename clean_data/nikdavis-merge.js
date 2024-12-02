@@ -1,16 +1,11 @@
-import {
-  readCSVFile,
-  createCSVWriter,
-} from "../utils.js";
+import { readCSVFile, createCSVWriter } from "../my_utils/utils.js";
 
 const directory_nikdavis = "./origin_csv/nik-davis/";
-
 const description = directory_nikdavis + "steam_description_data.csv";
 const media = directory_nikdavis + "steam_media_data.csv";
 const requirements = directory_nikdavis + "steam_requirements_data.csv";
 const support = directory_nikdavis + "steam_support_info.csv";
 const games = directory_nikdavis + "steam.csv";
-
 const outFilePath = "./filtered_csv/nikdavis-merge.csv";
 
 async function createCSV() {

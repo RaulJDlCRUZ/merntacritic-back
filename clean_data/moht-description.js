@@ -4,12 +4,11 @@ import {
   filterValues,
   getFilteredHeaders,
   createRecordObject,
-} from "../utils.js";
-import { mohamedTarekRemoval } from "../columnas-eliminadas.js";
+} from "../my_utils/utils.js";
+import { mohamedTarekRemoval } from "../my_utils/columnas-eliminadas.js";
 import { DateTime } from "luxon";
 
 const mohamed_tarek_video_games = new mohamedTarekRemoval().filterlist;
-
 const csvFilePath = "origin_csv/mohamed-games_description.csv";
 const outFilePath = "filtered_csv/filtered_mohamed-games_description.csv";
 

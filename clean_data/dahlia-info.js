@@ -3,7 +3,7 @@ import {
   createCSVWriter,
   filterValues,
   createRecordObject,
-} from "../utils.js";
+} from "../my_utils/utils.js";
 
 const csvFilePath = "origin_csv/dahlia-metacritic_game_info.csv";
 const outFilePath = "filtered_csv/filtered_dahlia-metacritic_game_info.csv";

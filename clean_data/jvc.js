@@ -5,12 +5,11 @@ import {
   getFilteredHeaders,
   createRecordObject,
   createRatingObject,
-} from "../utils.js";
-
+} from "../my_utils/utils.js";
 import { DateTime } from "luxon";
-import { jvcRemoval } from "../columnas-eliminadas.js";
-const jvc_games = new jvcRemoval().filterlist;
+import { jvcRemoval } from "../my_utils/columnas-eliminadas.js";
 
+const jvc_games = new jvcRemoval().filterlist;
 const csvFilePath = "origin_csv/jvc.csv";
 const outFilePath = "filtered_csv/filtered_jvc.csv";
 const noDate = "Date de sortie inconnue";
@@ -121,7 +120,7 @@ async function processCSV() {
           }
         } else {
           console.log(`[!] L${index + 2} Juego duplicado omitido`);
-        //   console.log(uniquekey);
+          //   console.log(uniquekey);
         }
       }
     });

@@ -5,9 +5,10 @@ import { DateTime } from "luxon";
 
 const results = [];
 const csvFilePath = "origin_csv/mohamed-steam_game_reviews.csv";
-const outFilePath = "filtered_csv/reordered_mohamed-steam_game_reviews.csv";
+const outFilePath = "filtered_csv/filtered_mohamed-steam_game_reviews.csv";
 const MAX_REVIEWS = 100;
 
+// NO USADO: Función para imprimir resultados de la cantidad de reviews por juego
 function printSliceResults(gameReviewCount) {
   console.log("Number of reviews for each game:");
   for (const [game, count] of Object.entries(gameReviewCount)) {
@@ -19,6 +20,7 @@ function printSliceResults(gameReviewCount) {
   }
 }
 
+// Función para corregir el formato de la fecha
 function correctDateFormat(dateString) {
   const formats = ["MMMM d, yyyy", "MMMM d", "d MMMM, yyyy", "d MMMM"];
 

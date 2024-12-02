@@ -1,8 +1,7 @@
-import { readCSVFile, createCSVWriter, createRecordObject } from "../utils.js";
+import { readCSVFile, createCSVWriter } from "../my_utils/utils.js";
 
 const csvFilePath1 = "origin_csv/game_awards_1419.csv";
 const csvFilePath2 = "origin_csv/game_awards_2023.csv";
-
 const outFilePath = "filtered_csv/filtered_game_awards.csv";
 
 async function processCSV() {

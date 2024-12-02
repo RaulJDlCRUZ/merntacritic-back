@@ -5,8 +5,7 @@ import {
   getFilteredHeaders,
   createRecordObject,
   createRatingObject,
-} from "../utils.js";
-
+} from "../my_utils/utils.js";
 import { DateTime } from "luxon";
 
 const csvFilePath = "origin_csv/vandal.csv";

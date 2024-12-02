@@ -5,8 +5,8 @@ import {
   getFilteredHeaders,
   createRecordObject,
   createRatingObject,
-} from "../utils.js";
-import { austinCorgisRemoval } from "../columnas-eliminadas.js";
+} from "../my_utils/utils.js";
+import { austinCorgisRemoval } from "../my_utils/columnas-eliminadas.js";
 
 const austin_corgis_video_games = new austinCorgisRemoval().filterlist;
 

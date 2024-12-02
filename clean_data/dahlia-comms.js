@@ -3,7 +3,7 @@ import {
   createCSVWriter,
   filterValues,
   createRecordObject,
-} from "../utils.js";
+} from "../my_utils/utils.js";
 
 const csvFilePath = "origin_csv/dahlia-metacritic_game_user_comments.csv";
 const outFilePath =
@@ -32,7 +32,10 @@ function limitReviewsByScore(records, maxReviews = MAX_REVIEWS_PG) {
     }
 
     if (gameScoreCountMap.get(gameKeyScore) < maxReviews) {
-      gameScoreCountMap.set(gameKeyScore, gameScoreCountMap.get(gameKeyScore) + 1);
+      gameScoreCountMap.set(
+        gameKeyScore,
+        gameScoreCountMap.get(gameKeyScore) + 1
+      );
       return true;
     }
 

@@ -6,12 +6,10 @@ import {
   getFilteredHeaders,
   createRecordObject,
   createRatingObject,
-} from "../utils.js";
-
-import { nikdavisRemoval } from "../columnas-eliminadas.js";
+} from "../my_utils/utils.js";
+import { nikdavisRemoval } from "../my_utils/columnas-eliminadas.js";
 
 const nikdavis_video_games = new nikdavisRemoval().filterlist;
-
 const csvFilePath = "filtered_csv/nikdavis-merge.csv";
 const outFilePath = "filtered_csv/filtered_nikdavis.csv";
 

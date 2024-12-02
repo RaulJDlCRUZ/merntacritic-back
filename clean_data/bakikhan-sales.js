@@ -1,4 +1,8 @@
-import { readCSVFile, createCSVWriter, createRatingObject } from "../utils.js";
+import {
+  readCSVFile,
+  createCSVWriter,
+  createRatingObject,
+} from "../my_utils/utils.js";
 
 const csvFilePath = "origin_csv/bakikhan-video-game-sales.csv";
 const outFilePath = "filtered_csv/filtered_bakikhan-video-game-sales.csv";
