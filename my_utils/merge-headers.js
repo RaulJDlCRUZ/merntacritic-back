@@ -20,7 +20,6 @@ export class GameHeaders {
       { id: "steam_tags", title: "Steam Tags" },
       { id: "achievements", title: "Achievements" },
       { id: "reviews_count", title: "Reviews Count" },
-      { id: "ranking", title: "Ranking" },
       { id: "rating_top", title: "Rating Top" },
     ];
     this.columnMap = {
@@ -83,8 +82,7 @@ export class GameHeaders {
       steam_tags: ["Popular Tags", "steamspy_tags"],
       achievements: ["achievements", "achievements_count"],
       reviews_count: ["reviews_count"],
-      ranking: ["rank"],
-      rating_top: ["rating_top"],
+      rating_top: ["rating_top"], // Me servirá por si quiero poner estrellas
     };
   }
 }
@@ -107,14 +105,21 @@ export class ReviewHeaders {
 export class SalesHeaders {
   constructor() {
     this.headers = [
-      { id: "game", title: "Game" },
-      { id: "year_of_release", title: "Year of Release" },
+      { id: "game", title: "Game" }, // SLUG
       { id: "na_sales", title: "NA Sales" },
       { id: "eu_sales", title: "EU Sales" },
       { id: "jp_sales", title: "JP Sales" },
       { id: "other_sales", title: "Other Sales" },
       { id: "global_sales", title: "Global Sales" },
     ];
+    this.columnMap = {
+      game: ["slug"],
+      na_sales: ["NA_Sales", "NA Sales", "North America Sales"],
+      eu_sales: ["EU_Sales", "EU Sales", "Europe Sales"],
+      jp_sales: ["JP_Sales", "JP Sales", "Japan Sales"],
+      other_sales: ["Other_Sales", "Other Sales", "Other Regions Sales", "Metrics-Sales"],
+      global_sales: ["Global_Sales", "Global Sales"],
+    };
   }
 }
 

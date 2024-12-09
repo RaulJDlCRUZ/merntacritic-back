@@ -22,7 +22,6 @@ const GameSchema = new Schema({
   steam_tags: [{ type: String }],
   achievements: { type: Number },
   reviews_count: { type: Number },
-  ranking: { type: Number },
   rating_top: { type: Number },
 });
 
