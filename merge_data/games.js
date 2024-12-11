@@ -8,8 +8,8 @@ import {
   generateSlug,
   generateSlugComplex,
   findDuplicateSlugs,
+  normalizePlatform,
 } from "../my_utils/merge-utils.js";
-import consoles from "../my_utils/console-names.js";
 
 const outputPath = "merge_data/games.csv";
 const gameHeaders = new GameHeaders().headers;
@@ -26,6 +26,7 @@ const input_files = [
   "filtered_csv/pc-steam/filtered_nikdavis.csv",
   "filtered_csv/pc-steam/filtered_mk-tm-merged_data.csv",
   "filtered_csv/pc-steam/filtered_liam_steam_games.csv",
+  "filtered_csv/pc-steam/filtered_masood_vidgames.csv",
   "filtered_csv/both/filtered_jvc.csv",
   "filtered_csv/both/filtered_vandal.csv",
   "filtered_csv/both/filtered_dahlia-metacritic_game_info.csv",
@@ -34,18 +35,6 @@ const input_files = [
 ];
 
 const isPcSteam = input_files.some((file) => file.includes("/pc-steam/"));
-
-function normalizePlatform(platformName) {
-  // Busca en todas las posibles variantes de nombres
-  const normalizedConsole = Object.values(consoles).find((console) =>
-    console.possibleNames.some((name) =>
-      platformName.toLowerCase().includes(name.toLowerCase())
-    )
-  );
-
-  // Devuelve el identificador si se encuentra, sino el nombre original
-  return normalizedConsole ? normalizedConsole.identifier : platformName;
-}
 
 // Función principal para combinar datos y generar el CSV
 const generateGamesCsv = async () => {
@@ -63,8 +52,10 @@ const generateGamesCsv = async () => {
 
       // Homogeneizar platform
       normalizedData.forEach((row) => {
-        if (row.platform && !row.platform.includes("[")) {
+        if (row.platform && !row.platform.includes("[") && row.platform !== "PC" && row.platform !== "Web") {
+          // process.stdout.write(row.platform + " -> ");
           row.platform = normalizePlatform(row.platform);
+          // process.stdout.write(row.platform + "\n");
         }
       });
 
@@ -104,13 +95,15 @@ const generateGamesCsv = async () => {
         }
       });
     }
-
+    
+    // console.log(`[i] -> ${findDuplicateSlugs(mergedData).size} registros`);
     mergedData = mergeDuplicates(mergedData);
     console.log("[i] Duplicados combinados");
 
     // Revisamos si aún quedan duplicados
     mergedData = removeDuplicates(mergedData);
     console.log("[i] Duplicados eliminados");
+
     // Escritura del archivo CSV final
     await csvWriter.writeRecords(mergedData);
     console.log(

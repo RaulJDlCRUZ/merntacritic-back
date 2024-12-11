@@ -307,7 +307,6 @@ const SegaCD = new ConsoleNames("SCD", "SEGA CD", [
   "SEGA Wondermega RG-M3",
   "Sega Mega-CD",
   "Sega Mega-CD II",
-  "Sega Mega CD",
 ]);
 
 const SegaMasterSystem = new ConsoleNames("SMS", "SEGA Master System", [

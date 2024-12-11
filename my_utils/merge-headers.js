@@ -70,12 +70,13 @@ export class GameHeaders {
         "Metascore",
         "Critic_Score",
       ],
-      user_score: ["User_Score", "website_rating", "Avg_Userscore", "user_rating", "public_rating"],
+      user_score: ["User_Score", "website_rating", "Avg_Userscore", "user_rating", "public_rating", "user_review"],
       website: ["website", "url"],
       description: [
         "short_description",
         "detailed_description",
         "Game Description",
+        "summary",
       ],
       supported_languages: ["Supported Languages"],
       game_features: ["Features-MaxPlayers", "Game Features"],
@@ -90,7 +91,7 @@ export class GameHeaders {
 export class ReviewHeaders {
   constructor() {
     this.headers = [
-      { id: "game", title: "Game" },
+      { id: "game", title: "Game" }, // SLUG
       { id: "username", title: "Username" },
       { id: "review_text", title: "Review Text" },
       { id: "review_score", title: "Review Score" },
@@ -99,6 +100,16 @@ export class ReviewHeaders {
       { id: "recommendation", title: "Recommendation" },
       { id: "date", title: "Date" },
     ];
+    this.columnMap = {
+      game: ["slug"],
+      username: ["Username", "username", "User", "user"],
+      review_text: ["Review", "Review Text", "Review_Text", "Comment"],
+      review_score: ["Score", "Review Score", "Review_Score", "Userscore", "website_rating"],
+      review_votes: ["Votes", "Review Votes", "Review_Votes", "helpful"],
+      hours_played: ["hours_played", "Hours", "Hours Played", "Hours_Played"],
+      recommendation: ["recommendation", "Recommendation", "Recommendation_Status"],
+      date: ["Date", "Review Date"],
+    }
   }
 }
 
@@ -126,7 +137,7 @@ export class SalesHeaders {
 export class RankingHeaders {
   constructor() {
     this.headers = [
-      { id: "game", title: "Game" },
+      { id: "game", title: "Game" }, // SLUG
       { id: "rank_type", title: "Rank Type" },
       { id: "rank", title: "Rank" },
       { id: "category", title: "Category" },
@@ -139,7 +150,7 @@ export class RankingHeaders {
 export class LongToBeatHeaders {
   constructor() {
     this.headers = [
-      { id: "game", title: "Game" },
+      { id: "game", title: "Game" }, // SLUG
       { id: "all_playstyles", title: "All Playstyles" },
       { id: "completionists", title: "Completionists" },
       { id: "with_extras", title: "With Extras" },
@@ -151,7 +162,7 @@ export class LongToBeatHeaders {
 export class GameAwardsHeaders {
   constructor() {
     this.headers = [
-      { id: "game", title: "Game" },
+      { id: "game", title: "Game" }, // SLUG
       { id: "year", title: "Year" },
       { id: "category", title: "Category" },
       { id: "winner", title: "Winner" },
