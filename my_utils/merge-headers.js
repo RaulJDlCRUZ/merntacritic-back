@@ -48,7 +48,7 @@ export class GameHeaders {
         "released",
         "Release Date",
         "Year_of_Release",
-        "Year"
+        "Year",
       ],
       age_rating: [
         "Release-Rating",
@@ -70,7 +70,14 @@ export class GameHeaders {
         "Metascore",
         "Critic_Score",
       ],
-      user_score: ["User_Score", "website_rating", "Avg_Userscore", "user_rating", "public_rating", "user_review"],
+      user_score: [
+        "User_Score",
+        "website_rating",
+        "Avg_Userscore",
+        "user_rating",
+        "public_rating",
+        "user_review",
+      ],
       website: ["website", "url"],
       description: [
         "short_description",
@@ -104,12 +111,22 @@ export class ReviewHeaders {
       game: ["slug"],
       username: ["Username", "username", "User", "user"],
       review_text: ["Review", "Review Text", "Review_Text", "Comment"],
-      review_score: ["Score", "Review Score", "Review_Score", "Userscore", "website_rating"],
+      review_score: [
+        "Score",
+        "Review Score",
+        "Review_Score",
+        "Userscore",
+        "website_rating",
+      ],
       review_votes: ["Votes", "Review Votes", "Review_Votes", "helpful"],
       hours_played: ["hours_played", "Hours", "Hours Played", "Hours_Played"],
-      recommendation: ["recommendation", "Recommendation", "Recommendation_Status"],
+      recommendation: [
+        "recommendation",
+        "Recommendation",
+        "Recommendation_Status",
+      ],
       date: ["Date", "Review Date"],
-    }
+    };
   }
 }
 
@@ -128,7 +145,12 @@ export class SalesHeaders {
       na_sales: ["NA_Sales", "NA Sales", "North America Sales"],
       eu_sales: ["EU_Sales", "EU Sales", "Europe Sales"],
       jp_sales: ["JP_Sales", "JP Sales", "Japan Sales"],
-      other_sales: ["Other_Sales", "Other Sales", "Other Regions Sales", "Metrics-Sales"],
+      other_sales: [
+        "Other_Sales",
+        "Other Sales",
+        "Other Regions Sales",
+        "Metrics-Sales",
+      ],
       global_sales: ["Global_Sales", "Global Sales"],
     };
   }
@@ -156,6 +178,30 @@ export class LongToBeatHeaders {
       { id: "with_extras", title: "With Extras" },
       { id: "main_story", title: "Main Story" },
     ];
+    this.columnMap = {
+      game: ["slug"],
+      all_playstyles: [
+        "Length-AllPlayStyles-Average",
+        "All Playstyles",
+        "All Playstyles Average",
+        "playtime",
+      ], //th_game_info
+      completionists: [
+        "Length-Completionists-Average",
+        "Completionists",
+        "Completionists Average",
+      ],
+      with_extras: [
+        "Length-MainExtras-Average",
+        "With Extras",
+        "With Extras Average",
+      ],
+      main_story: [
+        "Length-MainStory-Average",
+        "Main Story",
+        "Main Story Average",
+      ],
+    };
   }
 }
 
