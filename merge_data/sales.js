@@ -23,6 +23,7 @@ const input_files = [
 
 const game_list = readCsv("merge_data/games.csv");
 
+// Función para eliminar duplicados
 function removeSalesDuplicates(data) {
   const seen = new Set();
   return data.filter((row) => {
@@ -37,6 +38,18 @@ function removeSalesDuplicates(data) {
       return true;
     }
   });
+}
+
+// Función para generar un CSV de ventas únicas
+async function generateUniqueSalesCsv() {
+  const salesData = await readCSVFile(outputPath);
+  const headers = Object.keys(salesData[0]);
+  const csvWriter = createObjectCsvWriter({
+    path: outputPath2,
+    header: headers.map((header) => ({ id: header, title: header })),
+  });
+  const uniqueSalesData = removeSalesDuplicates(salesData);
+  await csvWriter.writeRecords(Array.from(uniqueSalesData));
 }
 
 // Función principal para crear un CSV de ventas
@@ -81,21 +94,9 @@ async function generateSalesCsv() {
     });
   }
 
-//   console.log(salesData);
+  //   console.log(salesData);
   await csvWriter.writeRecords(salesData);
   console.log(`\nCSV de ventas generado en: ${outputPath}`);
-}
-
-// generateSalesCsv().catch(console.error);
-async function generateUniqueSalesCsv() {
-  const salesData = await readCSVFile(outputPath);
-  const headers = Object.keys(salesData[0]);
-  const csvWriter = createObjectCsvWriter({
-    path: outputPath2,
-    header: headers.map((header) => ({ id: header, title: header })),
-  });
-  const uniqueSalesData = removeSalesDuplicates(salesData);
-  await csvWriter.writeRecords(Array.from(uniqueSalesData));
 }
 
 // generateSalesCsv();
