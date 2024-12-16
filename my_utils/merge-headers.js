@@ -163,9 +163,17 @@ export class RankingHeaders {
       { id: "rank_type", title: "Rank Type" },
       { id: "rank", title: "Rank" },
       { id: "category", title: "Category" },
-      { id: "studio", title: "Studio" },
+      // { id: "studio", title: "Studio" },
       { id: "year", title: "Year" },
     ];
+    this.columnMap = {
+      game: ["game_name", "slug"],
+      rank_type: ["rank_type", "Rank Type", "Rank_Type", "RankType"],
+      rank: ["rank", "Rank", "Ranking", "Ranking_Position"],
+      category: ["genre", "Category", "Genre", "category"],
+      // studio: ["Studio", "Developer", "studio"],
+      year: ["Year", "year"],
+    };
   }
 }
 

@@ -7,7 +7,7 @@ const RankingSchema = new Schema({
   rank_type: { type: String },
   rank: { type: Number },
   category: { type: String },
-  studio: { type: String },
+  // studio: { type: String },
   year: { type: Number },
 });
 
