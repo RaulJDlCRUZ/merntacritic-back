@@ -216,9 +216,10 @@ export class LongToBeatHeaders {
 export class GameAwardsHeaders {
   constructor() {
     this.headers = [
-      { id: "game", title: "Game" }, // SLUG
       { id: "year", title: "Year" },
       { id: "category", title: "Category" },
+      { id: "game", title: "Game" }, // NO ES UN SLUG, ES EL NOMBRE DEL JUEGO
+      { id: "studio", title: "Studio" },
       { id: "winner", title: "Winner" },
     ];
   }

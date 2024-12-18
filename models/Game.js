@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 
 const GameSchema = new Schema({
   title: { type: String, required: true },
-  slug: { type: String, required: true },
+  slug: { type: String, required: true, unique: true },
   platform: { type: String, required: true },
   genre: [{ type: String }],
   publisher: [{ type: String }],
-  developer: { type: [String], required: true },
+  developer: { type: [String] },
   release_date: { type: Date, required: true },
   esrb_rating: { type: String },
   price: { type: Number },
