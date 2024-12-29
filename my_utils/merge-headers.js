@@ -92,6 +92,28 @@ export class GameHeaders {
       reviews_count: ["reviews_count"],
       rating_top: ["rating_top"], // Me servirá por si quiero poner estrellas
     };
+    this.alternateColumnMap = {
+      title: ["Title"],
+      slug: ["Slug"],
+      platform: ["Platform"],
+      genre: ["Genre"],
+      publisher: ["Publisher"],
+      developer: ["Developer"],
+      release_date: ["Release Date"],
+      age_rating: ["Age Rating"],
+      price: ["Price"],
+      discounted_price: ["Discounted Price"],
+      metascore: ["Metascore"],
+      user_score: ["User Score"],
+      website: ["Website"],
+      description: ["Description"],
+      supported_languages: ["Supported Languages"],
+      game_features: ["Game Features"],
+      steam_tags: ["Steam Tags"],
+      achievements: ["Achievements"],
+      reviews_count: ["Reviews Count"],
+      rating_top: ["Rating Top"],
+    };
   }
 }
 

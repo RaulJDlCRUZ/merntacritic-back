@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const GameSchema = new Schema({
+const gameSchema = new Schema({
   title: { type: String, required: true },
   slug: { type: String, required: true, unique: true },
   platform: { type: String, required: true },
@@ -25,4 +25,5 @@ const GameSchema = new Schema({
   rating_top: { type: Number },
 });
 
+export const GameSchema = gameSchema;
 export default mongoose.model("Game", GameSchema);

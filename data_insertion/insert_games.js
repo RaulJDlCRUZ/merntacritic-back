@@ -1,34 +1,61 @@
-import { connect, Schema, model, connection } from "mongoose";
 import csv from "csv-parser";
-import { createReadStream } from "fs";
+import fs from "fs";
+import { MongoClient } from "mongodb";
+import Game, { GameSchema } from "../models/Game.js";
+import { normalizeRow, readCsv } from "../my_utils/merge-utils.js";
+import { GameHeaders } from "../my_utils/merge-headers.js";
 
-connect("mongodb://localhost:27017/merntacritic", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const MONGO_URI = "mongodb://localhost:27017";
+const DATABASE_NAME = "merntacritic";
+const COLLECTION_NAME = "games";
+const file = "/home/ubicuos/final_csv/games.csv";
+const gamesColumnMap = new GameHeaders().alternateColumnMap;
 
-const gameSchema = new Schema({
-  title: String,
-  genre: String,
-  releaseDate: Date,
-  rating: Number,
-});
+async function main() {
+  // Conexión a la base de datos
+  const client = new MongoClient(MONGO_URI);
+  try {
+    console.log("Conectando a MongoDB...");
+    await client.connect();
+    console.log("Conexión exitosa.");
 
-const Game = model("Game", gameSchema);
+    const db = client.db(DATABASE_NAME);
+    const collection = db.collection(COLLECTION_NAME);
 
-const results = [];
+    const stream = fs.createReadStream(file).pipe(csv());
+    for await (const row of stream) {
+      const game = new Game(normalizeRow(row, gamesColumnMap, false));
+      const validationError = game.validateSync();
+      if (validationError) {
+        console.error("Error de validación:", validationError);
+      } else {
+        try {
+          await collection.insertOne(game);
+          console.log("Juego insertado:", game.slug);
+        } catch (error) {
+          console.error("Error al insertar el juego:", error);
+        }
+      }
+    }
+    await client.close();
+  } catch (error) {
+    console.error("Error al conectar a MongoDB:", error);
+  }
+}
 
-createReadStream("games.csv")
-  .pipe(csv())
-  .on("data", (data) => results.push(data))
-  .on("end", () => {
-    Game.insertMany(results)
-      .then(() => {
-        console.log("Data inserted successfully");
-        connection.close();
-      })
-      .catch((error) => {
-        console.error("Error inserting data: ", error);
-        connection.close();
-      });
+async function testRead() {
+  const data = readCsv(file);
+  data.forEach((row) => {
+    const game = new Game(normalizeRow(row, gamesColumnMap, false));
+    const validationError = game.validateSync();
+    if (validationError) {
+      console.error("Error de validación:", validationError);
+      // } else {
+      //   console.log("Fila válida:", game.slug);
+      // }
+    }
   });
+}
+
+main();
+// testRead();
