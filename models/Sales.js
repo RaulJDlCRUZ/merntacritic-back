@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const SalesSchema = new Schema({
+const salesSchema = new Schema({
   game: { type: String, ref: "Game", required: true },
   na_sales: { type: Number },
   eu_sales: { type: Number },
@@ -11,7 +11,7 @@ const SalesSchema = new Schema({
   global_sales: { type: Number },
 });
 
-SalesSchema.pre("save", async function (next) {
+salesSchema.pre("save", async function (next) {
   const Game = mongoose.model("Game");
   const exists = await Game.exists({ slug: this.gameSlug });
   if (!exists) {
@@ -20,4 +20,5 @@ SalesSchema.pre("save", async function (next) {
   next();
 });
 
+export const SalesSchema = salesSchema;
 export default mongoose.model("Sales", SalesSchema);

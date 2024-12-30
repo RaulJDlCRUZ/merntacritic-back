@@ -1,7 +1,7 @@
 import csv from "csv-parser";
 import fs from "fs";
 import { MongoClient } from "mongodb";
-import Game, { GameSchema } from "../models/Game.js";
+import Game from "../models/Game.js";
 import { normalizeRow, readCsv } from "../my_utils/merge-utils.js";
 import { GameHeaders } from "../my_utils/merge-headers.js";
 
@@ -40,6 +40,7 @@ async function main() {
     await client.close();
   } catch (error) {
     console.error("Error al conectar a MongoDB:", error);
+    return;
   }
 }
 
@@ -57,5 +58,5 @@ async function testRead() {
   });
 }
 
-main();
 // testRead();
+main();

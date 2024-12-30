@@ -149,6 +149,16 @@ export class ReviewHeaders {
       ],
       date: ["Date", "Review Date"],
     };
+    this.alternateColumnMap = {
+      game: ["Game"],
+      username: ["Username"],
+      review_text: ["Review Text"],
+      review_score: ["Review Score"],
+      review_votes: ["Review Votes"],
+      hours_played: ["Hours Played"],
+      recommendation: ["Recommendation"],
+      date: ["Date"],
+    };
   }
 }
 
@@ -175,6 +185,14 @@ export class SalesHeaders {
       ],
       global_sales: ["Global_Sales", "Global Sales"],
     };
+    this.alternateColumnMap = {
+      game: ["Game"],
+      na_sales: ["NA Sales"],
+      eu_sales: ["EU Sales"],
+      jp_sales: ["JP Sales"],
+      other_sales: ["Other Sales"],
+      global_sales: ["Global Sales"],
+    };
   }
 }
 
@@ -195,6 +213,14 @@ export class RankingHeaders {
       category: ["genre", "Category", "Genre", "category"],
       // studio: ["Studio", "Developer", "studio"],
       year: ["Year", "year"],
+    };
+    this.alternateColumnMap = {
+      game: ["Game"],
+      rank_type: ["Rank Type"],
+      rank: ["Rank"],
+      category: ["Category"],
+      // studio: ["Studio"],
+      year: ["Year"],
     };
   }
 }
@@ -232,6 +258,13 @@ export class LongToBeatHeaders {
         "Main Story Average",
       ],
     };
+    this.alternateColumnMap = {
+      game: ["Game"],
+      all_playstyles: ["All Playstyles"],
+      completionists: ["Completionists"],
+      with_extras: ["With Extras"],
+      main_story: ["Main Story"],
+    };
   }
 }
 
@@ -244,5 +277,12 @@ export class GameAwardsHeaders {
       { id: "studio", title: "Studio" },
       { id: "winner", title: "Winner" },
     ];
+    this.columnMap = {
+      year: ["Year", "year"],
+      category: ["Category", "category"],
+      game: ["Game", "game"],
+      studio: ["Studio", "studio"],
+      winner: ["Winner", "winner"],
+    };
   }
 }

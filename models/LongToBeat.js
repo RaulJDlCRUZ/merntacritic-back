@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const LongToBeatSchema = new Schema({
+const longToBeatSchema = new Schema({
   game: { type: String, ref: "Game", required: true },
   all_playstyles: { type: Number },
   completionists: { type: Number },
@@ -10,7 +10,7 @@ const LongToBeatSchema = new Schema({
   main_story: { type: Number },
 });
 
-LongToBeatSchema.pre("save", async function (next) {
+longToBeatSchema.pre("save", async function (next) {
   const Game = mongoose.model("Game");
   const exists = await Game.exists({ slug: this.gameSlug });
   if (!exists) {
@@ -19,4 +19,5 @@ LongToBeatSchema.pre("save", async function (next) {
   next();
 });
 
+export const LongToBeatSchema = longToBeatSchema;
 export default mongoose.model("LongToBeat", LongToBeatSchema);
