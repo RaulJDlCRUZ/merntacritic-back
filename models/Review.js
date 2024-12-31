@@ -13,6 +13,7 @@ const reviewSchema = new Schema({
   date: { type: Date },
 });
 
+/* Antes de guardar el documento vemos si el juego existe en su colección */
 reviewSchema.pre("save", async function (next) {
   const Game = mongoose.model("Game");
   const exists = await Game.exists({ slug: this.gameSlug });
