@@ -52,7 +52,4 @@ router.get("/search/:name", function (req, res, next) {
   );
 });
 
-/* Obtener detalles de un juego (ventas, comentarios...) */
-// TODO: Implementar
-
 export default router;

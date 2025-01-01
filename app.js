@@ -17,6 +17,9 @@ import usersRouter from './routes/users.js';
 import gamesRouter from './routes/games.js';
 import salesRouter from './routes/sales.js';
 import longtobeatRouter from './routes/longtobeat.js';
+import awardsRouter from './routes/awards.js';
+import rankingsRouter from './routes/rankings.js';
+import favRouter from './routes/favs.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -40,6 +43,9 @@ app.use('/users', usersRouter);
 app.use('/games', gamesRouter);
 app.use('/sales', salesRouter);
 app.use('/longtobeat', longtobeatRouter);
+app.use('/awards', awardsRouter);
+app.use('/rankings', rankingsRouter);
+app.use('/favs', favRouter);
 
 /* Conexión a la base de datos */
 const fullURI = process.env.MONGODB_URI + process.env.MONGODB_NAME;

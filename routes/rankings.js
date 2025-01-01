@@ -6,35 +6,35 @@ var router = Router();
 import debug from "debug";
 const debugInstance = debug("merntacritic-back:server");
 
-import LongToBeat from "../models/LongToBeat.js";
+import Ranking from "../models/Ranking.js";
 
 // DB Config
 mongoose.set("strictQuery", false);
 var db = mongoose.connection;
 
-/* GET de un listado de tiempo de juego normal */
-router.get("/", function (req, res) {
-  LongToBeat.find()
-    .limit(100)
-    .exec(function (err, ltbs) {
+/* GET de los registros de rankings de videojuegos */
+router.get("/", function (req, res, next) {
+  Ranking.find()
+    .sort({ year: -1, rank: 1 })
+    .exec(function (err, rankings) {
       if (err) res.status(500).send(err);
-      else res.status(200).json(ltbs);
+      else res.status(200).json(rankings);
     });
 });
 
-/* GET datos de tiempo de juego por su Id */
+/* GET datos de rankings por su Id */
 router.get("/id/:id", function (req, res, next) {
-  LongToBeat.findById(req.params.id, function (err, ltb) {
+  Ranking.findById(req.params.id, function (err, ranking) {
     if (err) res.status(500).send(err);
-    else res.status(200).json(ltb);
+    else res.status(200).json(ranking);
   });
 });
 
-/* GET datos de tiempo de juego por su juego */
+/* GET datos de rankings por su juego */
 router.get("/:game", function (req, res, next) {
-  LongToBeat.findOne({ game: req.params.game }, function (err, ltb) {
+  Ranking.findOne({ game: req.params.game }, function (err, ranking) {
     if (err) res.status(500).send(err);
-    else res.status(200).json(ltb);
+    else res.status(200).json(ranking);
   });
 });
 
