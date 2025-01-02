@@ -4,9 +4,11 @@ import { MongoClient } from "mongodb";
 import LongToBeat from "../models/LongToBeat.js";
 import { normalizeRow } from "../my_utils/merge-utils.js";
 import { LongToBeatHeaders } from "../my_utils/merge-headers.js";
+import dotenv from "dotenv";
+dotenv.config({ override: true });
 
-const MONGO_URI = "mongodb://localhost:27017";
-const DATABASE_NAME = "merntacritic";
+const MONGO_URI = process.env.MONGODB_URI;
+const DATABASE_NAME = process.env.MONGODB_NAME;
 const COLLECTION_NAME = "longtobeat";
 const file = "/home/ubicuos/final_csv/longtobeat_cleaned.csv";
 const ltbColumnMap = new LongToBeatHeaders().alternateColumnMap;

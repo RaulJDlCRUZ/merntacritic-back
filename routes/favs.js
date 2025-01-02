@@ -8,11 +8,13 @@ const debugInstance = debug("merntacritic-back:server");
 
 import Fav from "../models/Fav.js";
 
-var db = connection;
+// DB Config
+mongoose.set("strictQuery", false);
+var db = mongoose.connection;
 
 /* GET fav games listing from an user by user email. */
 router.get("/:email", function (req, res) {
-  find({ email: req.params.email })
+  Fav.find({ email: req.params.email })
     .sort("-addeddate")
     .populate("game")
     .exec(function (err, favs) {
@@ -23,7 +25,7 @@ router.get("/:email", function (req, res) {
 
 /* POST a new fav game */
 router.post("/", function (req, res) {
-  create(req.body, function (err, favinfo) {
+  Fav.create(req.body, function (err, favinfo) {
     if (err) res.status(500).send(err);
     else res.sendStatus(200);
   });
@@ -31,7 +33,7 @@ router.post("/", function (req, res) {
 
 /* DELETE an existing fav game */
 router.delete("/:id", function (req, res) {
-  findByIdAndDelete(req.params.id, function (err, favinfo) {
+  Fav.findByIdAndDelete(req.params.id, function (err, favinfo) {
     if (err) res.status(500).send(err);
     else res.sendStatus(200);
   });

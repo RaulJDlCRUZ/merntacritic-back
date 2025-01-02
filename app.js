@@ -5,6 +5,8 @@ import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 import debug from "debug";
 const debugInstance = debug("merntacritic-back:server");
@@ -25,6 +27,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 var app = express();
+
+// Habilita CORS para todas las solicitudes
+app.use(cors({
+  origin: process.env.FRONTEND, // URL de tu frontend Vite
+}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 // view engine setup
 app.set('views', join(__dirname, 'views'));

@@ -4,9 +4,11 @@ import { MongoClient } from "mongodb";
 import Game from "../models/Game.js";
 import { normalizeRow, readCsv } from "../my_utils/merge-utils.js";
 import { GameHeaders } from "../my_utils/merge-headers.js";
+import dotenv from "dotenv";
+dotenv.config({ override: true });
 
-const MONGO_URI = "mongodb://localhost:27017";
-const DATABASE_NAME = "merntacritic";
+const MONGO_URI = process.env.MONGODB_URI;
+const DATABASE_NAME = process.env.MONGODB_NAME;
 const COLLECTION_NAME = "games";
 const file = "/home/ubicuos/final_csv/games.csv";
 const gamesColumnMap = new GameHeaders().alternateColumnMap;
