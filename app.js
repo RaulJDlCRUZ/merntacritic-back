@@ -29,9 +29,13 @@ const __dirname = dirname(__filename);
 var app = express();
 
 // Habilita CORS para todas las solicitudes
-app.use(cors({
-  origin: process.env.FRONTEND, // URL de tu frontend Vite
-}));
+app.use(
+  cors({
+    origin: process.env.FRONTEND, // Permite solicitudes desde tu frontend
+    methods: ["GET", "POST", "PUT", "DELETE"], // Métodos HTTP permitidos
+  })
+);
+
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
