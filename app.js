@@ -17,6 +17,7 @@ dotenv.config({ override: true });
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
 import gamesRouter from './routes/games.js';
+import reviewsRouter from './routes/reviews.js';
 import salesRouter from './routes/sales.js';
 import longtobeatRouter from './routes/longtobeat.js';
 import awardsRouter from './routes/awards.js';
@@ -31,8 +32,9 @@ var app = express();
 // Habilita CORS para todas las solicitudes
 app.use(
   cors({
-    origin: process.env.FRONTEND, // Permite solicitudes desde tu frontend
-    methods: ["GET", "POST", "PUT", "DELETE"], // Métodos HTTP permitidos
+    origin: process.env.FRONTEND,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // Habilita credenciales (cookies o tokens)
   })
 );
 
@@ -54,6 +56,7 @@ app.use(express.static(join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/games', gamesRouter);
+app.use('/reviews', reviewsRouter);
 app.use('/sales', salesRouter);
 app.use('/longtobeat', longtobeatRouter);
 app.use('/awards', awardsRouter);
@@ -67,7 +70,7 @@ mongoose
   .then(() => debugInstance("MongoDB DataBase connection successful"))
   .catch(err => debugInstance("MongoDB connection error:", err));
 
-// catch 404 and forward to error handler
+// capturar (y manejar) errores 404
 app.use(function(req, res, next) {
   next(createError(404));
 });
@@ -81,6 +84,11 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.use((req, res, next) => {
+  debugInstance(`Request: ${req.method} ${req.url}`);
+  next();
 });
 
 export default app;

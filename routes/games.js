@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 var router = Router();
 
 import debug from "debug";
-const debugInstance = debug("merntacritic-back:server");
+const debugInstance = debug("merntacritic-back:games");
 
 import Game from "../models/Game.js";
 import Review from "../models/Review.js";
@@ -80,6 +80,7 @@ async function getGameDetails(game) {
 
 /* GET de un listado de juegos normal */
 router.get("/", function (req, res, next) {
+  debugInstance("GET /games");
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || pageSize;
   const skip = (page - 1) * limit;
@@ -95,6 +96,7 @@ router.get("/", function (req, res, next) {
 
 /* GET con filtros o PARÁMETROS */
 router.get("/search", async (req, res) => {
+  debugInstance("GET /games/search" + JSON.stringify(req.query));
   try {
     const filter = {};
     const queryKeys = Object.keys(req.query);
@@ -121,6 +123,7 @@ router.get("/search", async (req, res) => {
 
 /* GET de un listado de los MEJORES juegos (normal) */
 router.get("/best", function (req, res, next) {
+  debugInstance("GET /games/best");
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 8;
   const skip = (page - 1) * limit;
@@ -136,6 +139,7 @@ router.get("/best", function (req, res, next) {
 
 /* GET últimos lanzamientos de juegos */
 router.get("/latest", function (req, res, next) {
+  debugInstance("GET /games/latest");
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 8;
   const skip = (page - 1) * limit;
@@ -151,6 +155,7 @@ router.get("/latest", function (req, res, next) {
 
 /* GET de un juego su slug */
 router.get("/:slug", async (req, res) => {
+  debugInstance("GET /games/" + req.params.slug);
   try {
     const game = await Game.findOne({ slug: req.params.slug });
     if (!game) {
@@ -169,6 +174,7 @@ router.get("/:slug", async (req, res) => {
 
 /* GET de un juego su Id */
 router.get("/id/:id", async function (req, res, next) {
+  debugInstance("GET /games/id/" + req.params.id);
   try {
     const game = await Game.findById(req.params.id);
     if (!game) {
