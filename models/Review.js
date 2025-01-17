@@ -16,9 +16,9 @@ const reviewSchema = new Schema({
 /* Antes de guardar el documento vemos si el juego existe en su colección */
 reviewSchema.pre("save", async function (next) {
   const Game = mongoose.model("Game");
-  const exists = await Game.exists({ slug: this.gameSlug });
+  const exists = await Game.exists({ slug: this.game });
   if (!exists) {
-    return next(new Error(`El juego con slug "${this.gameSlug}" no existe`));
+    return next(new Error(`El juego con slug "${this.game}" no existe`));
   }
   next();
 });
